@@ -1,24 +1,19 @@
-const checkString = function(str , maxLength) {
-  const length = str.length;
+function checkStringLength(string , maxLength) {
+  const length = string.length;
   return length <= maxLength;
-};
+}
 
-console.log(checkString('hello', 5));
-console.log(checkString('hello', 3));
-console.log(checkString('проверяемая строка', 20));
+checkStringLength();
 
-const palindrome = function(str) {
-  const normalizeStr = str.replaceAll().toLowerCase();
-  let string = '';
+function checkPalindrome(string) {
+  const normalizedString = string.replaceAll().toLowerCase();
+  let reversedString = '';
 
-  for (let i = normalizeStr.length - 1; i >= 0; i--) {
-    string += normalizeStr[i];
+  for (let i = normalizedString.length - 1; i >= 0; i--) {
+    reversedString += normalizedString[i];
   }
 
-  return string === normalizeStr;
-};
+  return reversedString === normalizedString;
+}
 
-
-console.log(palindrome('топот'));
-console.log(palindrome('ДовОд'));
-console.log(palindrome('Кекс'));
+checkPalindrome();
