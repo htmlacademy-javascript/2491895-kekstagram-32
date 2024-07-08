@@ -1,3 +1,4 @@
+/*
 function checkStringLength(string , maxLength) {
   const length = string.length;
   return length <= maxLength;
@@ -17,3 +18,4 @@ function checkPalindrome(string) {
 }
 
 checkPalindrome();
+*/
