@@ -19,7 +19,7 @@ const NAMES = [
   'Николай'
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -28,7 +28,7 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'Самая лучшая фотография',
   'Самая профессиональная фотография',
   'Вся красота мира в одной картинке',
@@ -45,7 +45,7 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const getRanomArrayElement = (array) => array[getRandomInteger(0, array.length - 1)];
+const getRandomArrayElement = (array) => array[getRandomInteger(0, array.length - 1)];
 
 const createIdGenerator = () => {
   let lastGeneratedId = 0;
@@ -58,19 +58,19 @@ const createIdGenerator = () => {
 
 const generateCommentId = createIdGenerator();
 
-const createMessage = () => Array.from({length: getRandomInteger(1, 2)}, () => getRanomArrayElement(MESSAGE)).join(' ');
+const createMessage = () => Array.from({length: getRandomInteger(1, 2)}, () => getRandomArrayElement(MESSAGES)).join(' ');
 
 const createComment = () => ({
   id: generateCommentId(),
   avatar: `img/avatar-${getRandomInteger(AVATAR_MIN, AVATAR_MAX)}.svg`,
   message: createMessage(),
-  name: getRanomArrayElement(NAMES),
+  name: getRandomArrayElement(NAMES),
 });
 
 const createPhotoCard = (index) => ({
   id: index,
   url: `photos/${index}.jpg`,
-  description: getRanomArrayElement(DESCRIPTION),
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKES_MIN, LIKES_MAX),
   comments: Array.from({length: getRandomInteger(COMMENTS_MIN, COMMENTS_MAX)}, createComment)
 });
