@@ -1,4 +1,3 @@
-/*
 function checkStringLength(string , maxLength) {
   const length = string.length;
   return length <= maxLength;
@@ -18,4 +17,20 @@ function checkPalindrome(string) {
 }
 
 checkPalindrome();
-*/
+
+function checkMeeting(startDay, endkDay, meetingStart, meetingDuration) {
+  function timeToMinutes(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
+
+  const workStart = timeToMinutes(startDay);
+  const workEnd = timeToMinutes(endkDay);
+  const meetingStartMinutes = timeToMinutes(meetingStart);
+
+  const meetingEndMinutes = meetingStartMinutes + meetingDuration;
+
+  return meetingStartMinutes >= workStart && meetingEndMinutes <= workEnd;
+}
+
+checkMeeting();
