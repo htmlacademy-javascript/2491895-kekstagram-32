@@ -64,3 +64,4 @@ const getPhotoCards = () => Array.from(
   (_, index) => createPhotoCard(index + 1));
 
 export {getPhotoCards};
+
