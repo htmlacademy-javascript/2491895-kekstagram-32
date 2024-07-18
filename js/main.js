@@ -1,4 +1,4 @@
 import {getPhotoCards} from './mock-data.js';
-import './util.js';
+import {renderPictureThumbnails} from './thumbnail-renderer.js';
 
-getPhotoCards();
+renderPictureThumbnails(getPhotoCards());
