@@ -1,5 +1,5 @@
 import {renderPictureThumbnails} from './thumbnail-renderer.js';
-import { openModal } from './modal-image.js';
+import {showPhotoModal} from './modal-image.js';
 
 const container = document.querySelector('.pictures');
 
@@ -14,7 +14,7 @@ const renderGallery = (pictures) => {
     const picture = pictures.find(
       (item) => item.id === +thumbnail.dataset.thumbnailId
     );
-    openModal(picture);
+    showPhotoModal(picture);
   });
 
   renderPictureThumbnails(pictures, container);
