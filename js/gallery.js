@@ -4,6 +4,8 @@ import {showPhotoModal} from './modal-image.js';
 const container = document.querySelector('.pictures');
 
 const renderGallery = (pictures) => {
+  renderPictureThumbnails(pictures, container);
+
   container.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail) {
@@ -17,7 +19,6 @@ const renderGallery = (pictures) => {
     showPhotoModal(picture);
   });
 
-  renderPictureThumbnails(pictures, container);
 };
 
 

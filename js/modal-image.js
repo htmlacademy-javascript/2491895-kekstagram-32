@@ -12,31 +12,32 @@ const commentElement = document.querySelector('#comment').content.querySelector(
 const displayedCommentsCountElement = bigPictureSection.querySelector('.social__comment-shown-count');
 const totalCommentsCountElement = bigPictureSection.querySelector('.social__comment-total-count');
 
-let commentsShow = 0;
+let commentsShown = 0;
 let comments = [];
 
 const createComment = ({avatar, name, message}) => {
   const comment = commentElement.cloneNode(true);
-  comment.querySelector('.social__picture').src = avatar;
-  comment.querySelector('.social__picture').alt = name;
+  const picture = comment.querySelector('.social__picture');
+  picture.src = avatar;
+  picture.alt = name;
   comment.querySelector('.social__text').textContent = message;
 
   return comment;
 };
 
 const renderComments = () => {
-  commentsShow += COMMENT_PER_PORTION;
+  commentsShown += COMMENT_PER_PORTION;
 
-  if (commentsShow >= comments.length) {
+  if (commentsShown >= comments.length) {
     commentsLoaderElement.classList.add('hidden');
-    commentsShow = comments.length;
+    commentsShown = comments.length;
   } else {
     commentsLoaderElement.classList.remove('hidden');
   }
 
   const fragment = document.createDocumentFragment();
 
-  const visibleComments = comments.slice(0, commentsShow);
+  const visibleComments = comments.slice(0, commentsShown);
   visibleComments.forEach((commentData) => {
     const comment = createComment(commentData);
     fragment.append(comment);
@@ -44,7 +45,7 @@ const renderComments = () => {
 
   commentsListElement.textContent = '';
   commentsListElement.append(fragment);
-  displayedCommentsCountElement.textContent = commentsShow;
+  displayedCommentsCountElement.textContent = commentsShown;
   totalCommentsCountElement.textContent = comments.length;
 };
 
@@ -52,7 +53,7 @@ const closeBigPicture = () => {
   bigPictureSection.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  commentsShow = 0;
+  commentsShown = 0;
 };
 
 function onDocumentKeydown(evt) {
