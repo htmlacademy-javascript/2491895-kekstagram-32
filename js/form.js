@@ -9,7 +9,7 @@ const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 
 const NUMBER_OF_HASHTAG = 5;
-const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const errorMessage = {
   INVALID_COUNT: `Максимальное количество хэш-тегов — ${NUMBER_OF_HASHTAG}.`,
   NOT_UNIQUE: 'Хэш-тег должен быть уникальным.',
@@ -20,7 +20,7 @@ const errorMessage = {
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: '.img-upload__field-wrapper--error',
+  errorTextClass: 'img-upload__field-wrapper--error'
 });
 
 const onFormSubmit = (evt) => {
@@ -36,11 +36,10 @@ const hideModal = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const isTextFieldFocused = () => document.activeElement === commentField || document.activeElement === hashtagField;
 
 const normalizeHashtag = (tadString) => tadString.trim().split(' ').filter((tag) => Boolean(tag.length));
 
-const hasValidTags = (value) => normalizeHashtag(value).every((tag) => VALID_SYMBOLS.test(tag));
+const hasValidTags = (value) => normalizeHashtag(value).every((tag) => HASHTAG_PATTERN.test(tag));
 
 const hasValidCount = (value) => normalizeHashtag(value).length <= NUMBER_OF_HASHTAG;
 
@@ -50,7 +49,7 @@ const hasUniqueTags = (value) => {
 };
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !isTextFieldFocused()) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideModal();
   }
@@ -69,6 +68,15 @@ const showModal = () => {
 const onFileFieldChange = () => {
   showModal();
 };
+
+const onInputKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
+
+hashtagField.addEventListener('keydown', onInputKeydown);
+commentField.addEventListener('keydown', onInputKeydown);
 
 pristine.addValidator(hashtagField, hasValidCount, errorMessage.INVALID_COUNT, 3, true);
 pristine.addValidator(hashtagField, hasUniqueTags, errorMessage.NOT_UNIQUE, 2, true);
