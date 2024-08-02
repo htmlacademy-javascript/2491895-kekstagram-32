@@ -1,4 +1,6 @@
 import {isEscapeKey} from './util.js';
+import {resetScale} from './scale.js';
+import {initEffect, resetEffect} from './effect-photo.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
@@ -62,6 +64,8 @@ const onCancelButtonClick = () => {
 
 const showModal = () => {
   body.classList.add('modal-open');
+  resetScale();
+  resetEffect();
   overlay.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
 };
@@ -85,3 +89,4 @@ pristine.addValidator(hashtagField, hasValidTags, errorMessage.INVALID_SYMBOLS, 
 fileField.addEventListener('change', onFileFieldChange);
 closeButton.addEventListener('click', onCancelButtonClick);
 form.addEventListener('submit', onFormSubmit);
+initEffect();
