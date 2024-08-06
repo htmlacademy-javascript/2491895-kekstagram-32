@@ -9,6 +9,7 @@ const closeButton = form.querySelector('.img-upload__cancel');
 const fileField = form.querySelector('.img-upload__input');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 const NUMBER_OF_HASHTAG = 5;
 const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -19,15 +20,37 @@ const errorMessage = {
   INVALID_COMMENT: 'Комментарий не может быть больше 140 символов.',
 };
 
+const submitButtontext = {
+  IDLE: 'Опубликовать',
+  SUBMITTING: 'Отправка...',
+};
+
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
 });
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = submitButtontext.SUBMITTING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = submitButtontext.IDLE;
+};
+
+const initializeFormSubmission = (callback) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      Promise.resolve(callback(new FormData(form)))
+        .finally(unblockSubmitButton);
+    }
+  });
 };
 
 const hideModal = () => {
@@ -88,5 +111,7 @@ pristine.addValidator(hashtagField, hasValidTags, errorMessage.INVALID_SYMBOLS, 
 
 fileField.addEventListener('change', onFileFieldChange);
 closeButton.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', onFormSubmit);
+
 initEffect();
+
+export {initializeFormSubmission , hideModal};

@@ -3,7 +3,7 @@ function checkStringLength(string , maxLength) {
   return length <= maxLength;
 }
 
-checkStringLength();
+checkStringLength(1,2);
 
 function checkPalindrome(string) {
   const normalizedString = string.replaceAll().toLowerCase();
@@ -16,7 +16,7 @@ function checkPalindrome(string) {
   return reversedString === normalizedString;
 }
 
-checkPalindrome();
+checkPalindrome('kayak');
 
 function checkMeeting(startDay, endkDay, meetingStart, meetingDuration) {
   function timeToMinutes(time) {
@@ -34,4 +34,4 @@ function checkMeeting(startDay, endkDay, meetingStart, meetingDuration) {
 }
 
 
-checkMeeting();
+checkMeeting('08:00', '17:30', '14:00', 90);
