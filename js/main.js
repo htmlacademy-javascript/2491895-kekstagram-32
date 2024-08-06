@@ -1,10 +1,10 @@
 import {renderGallery} from './gallery.js';
-import {setUserFormSubmit , hideModal} from './form.js';
+import {initializeFormSubmission , hideModal} from './form.js';
 import {getData, sendData} from './api.js';
 import {showAlert} from './util.js';
 import {showSuccsessMessage, showErrorMessage} from './message-form.js';
 
-setUserFormSubmit((data) => {
+initializeFormSubmission((data) => {
   sendData(data)
     .then(() => {
       hideModal();

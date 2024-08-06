@@ -41,19 +41,14 @@ const unblockSubmitButton = () => {
   submitButton.textContent = submitButtontext.IDLE;
 };
 
-const setUserFormSubmit = (callback) => {
+const initializeFormSubmission = (callback) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      callback(new FormData(form))
-        .then(() => {
-          unblockSubmitButton();
-        })
-        .catch(() => {
-          unblockSubmitButton();
-        });
+      Promise.resolve(callback(new FormData(form)))
+        .finally(unblockSubmitButton);
     }
   });
 };
@@ -119,4 +114,4 @@ closeButton.addEventListener('click', onCancelButtonClick);
 
 initEffect();
 
-export {setUserFormSubmit , hideModal};
+export {initializeFormSubmission , hideModal};

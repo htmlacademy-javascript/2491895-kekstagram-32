@@ -5,14 +5,14 @@ const errorMessageTemplate = document.querySelector('#error').content.querySelec
 const body = document.querySelector('body');
 
 function hideMessage() {
-  const messageElement = document.querySelector('.succses') || document.querySelector('.error');
+  const messageElement = document.querySelector('.success') || document.querySelector('.error');
   messageElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
   body.removeEventListener('click', onBodyClick);
 }
 
 function onBodyClick(evt) {
-  if (evt.target.closest('.succses') || evt.target.closest('.error')) {
+  if (evt.target.closest('.success__inner') || evt.target.closest('.error__inner')) {
     return;
   }
   hideMessage();
@@ -33,7 +33,7 @@ const showMessage = (messageElement, closeButtonClass) => {
 };
 
 const showSuccsessMessage = () => {
-  showMessage(successMessageTemplate, '.succses__button');
+  showMessage(successMessageTemplate, '.success__button');
 };
 
 const showErrorMessage = () => {
