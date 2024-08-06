@@ -20,8 +20,8 @@ const load = (route, method = Method.GET, body = null) =>
       throw new Error(err.message);
     });
 
-const getData = () => load(Route.GET_DATA);
+const getData = () => load(Route.GET_PICTURES);
 
-const sendData = (body) => load(Route.SEND_DATA, Method.POST, body);
+const sendData = (body) => load(Route.UPLOAD_PICTURE, Method.POST, body);
 
 export {getData, sendData};
