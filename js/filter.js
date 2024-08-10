@@ -10,15 +10,17 @@ let currentFilter = Filter.DEFAULT;
 let pictures = [];
 
 const getFilteredPictures = () => {
-  if (currentFilter === Filter.RANDOM) {
-    return [...pictures].sort(() => Math.random() - 0.5).slice(0, PICTURE_COUNT);
-  }
-  if (currentFilter === Filter.DISCUSSED) {
-    return [...pictures].sort((a, b) => b.comments.length - a.comments.length);
-  }
-  return pictures;
-};
+  switch (currentFilter) {
+    case Filter.RANDOM:
+      return [...pictures].sort(() => Math.random() - 0.5).slice(0, PICTURE_COUNT);
 
+    case Filter.DISCUSSED:
+      return [...pictures].sort((a, b) => b.comments.length - a.comments.length);
+
+    default:
+      return pictures;
+  }
+};
 const onFilterClick = (callback) => (evt) => {
   const button = evt.target.closest('.img-filters__button');
   if (!button || button.id === currentFilter) {
@@ -36,6 +38,5 @@ const initFilter = (loadedPictures, callback) => {
   pictures = [...loadedPictures];
   filterElement.addEventListener('click', onFilterClick(callback));
 };
-
 
 export {initFilter, getFilteredPictures};

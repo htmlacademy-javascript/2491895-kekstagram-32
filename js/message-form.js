@@ -29,9 +29,8 @@ function onDocumentKeydown(evt) {
     evt.preventDefault();
     if (isErrorMessageOpen) {
       hideMessage();
-    } else {
-      hideModal();
     }
+    return hideModal();
   }
 }
 

@@ -65,7 +65,6 @@ const hideModal = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-
 const normalizeHashtag = (tadString) => tadString.trim().split(' ').filter((tag) => Boolean(tag.length));
 
 const hasValidTags = (value) => normalizeHashtag(value).every((tag) => HASHTAG_PATTERN.test(tag));
@@ -83,12 +82,10 @@ function onDocumentKeydown(evt) {
     const messageElement = document.querySelector('.error');
     if (messageElement) {
       hideMessage();
-    } else {
-      hideModal();
     }
+    return hideModal();
   }
 }
-
 
 const onCancelButtonClick = () => {
   hideModal();
