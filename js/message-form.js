@@ -1,14 +1,20 @@
 import {isEscapeKey} from './util.js';
+import {blockSubmitButton, hideModal, unblockSubmitButton} from './form.js';
 
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 const body = document.querySelector('body');
+
+let isErrorMessageOpen = false;
 
 function hideMessage() {
   const messageElement = document.querySelector('.success') || document.querySelector('.error');
   messageElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
   body.removeEventListener('click', onBodyClick);
+  unblockSubmitButton();
+
+  isErrorMessageOpen = false;
 }
 
 function onBodyClick(evt) {
@@ -21,7 +27,10 @@ function onBodyClick(evt) {
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hideMessage();
+    if (isErrorMessageOpen) {
+      hideMessage();
+    }
+    return hideModal();
   }
 }
 
@@ -30,6 +39,7 @@ const showMessage = (messageElement, closeButtonClass) => {
   document.addEventListener('keydown', onDocumentKeydown);
   body.addEventListener('click', onBodyClick);
   messageElement.querySelector(closeButtonClass).addEventListener('click', hideMessage);
+  isErrorMessageOpen = true;
 };
 
 const showSuccsessMessage = () => {
@@ -37,7 +47,8 @@ const showSuccsessMessage = () => {
 };
 
 const showErrorMessage = () => {
+  blockSubmitButton();
   showMessage(errorMessageTemplate, '.error__button');
 };
 
-export {showSuccsessMessage, showErrorMessage};
+export {showSuccsessMessage, showErrorMessage, hideMessage};

@@ -1,7 +1,9 @@
 import {isEscapeKey} from './util.js';
 import {resetScale} from './scale.js';
 import {initEffect, resetEffect} from './effect-photo.js';
+import {hideMessage} from './message-form.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const body = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
@@ -10,6 +12,8 @@ const fileField = form.querySelector('.img-upload__input');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const submitButton = form.querySelector('.img-upload__submit');
+const photoPreview = form.querySelector('.img-upload__preview img');
+const effectsPreviews = document.querySelectorAll('.effects__preview');
 
 const NUMBER_OF_HASHTAG = 5;
 const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -61,7 +65,6 @@ const hideModal = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-
 const normalizeHashtag = (tadString) => tadString.trim().split(' ').filter((tag) => Boolean(tag.length));
 
 const hasValidTags = (value) => normalizeHashtag(value).every((tag) => HASHTAG_PATTERN.test(tag));
@@ -76,10 +79,13 @@ const hasUniqueTags = (value) => {
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hideModal();
+    const messageElement = document.querySelector('.error');
+    if (messageElement) {
+      hideMessage();
+    }
+    return hideModal();
   }
 }
-
 
 const onCancelButtonClick = () => {
   hideModal();
@@ -93,7 +99,16 @@ const showModal = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 const onFileFieldChange = () => {
-  showModal();
+  const file = fileField.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    photoPreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url(${photoPreview.src})`;
+    });
+    showModal();
+  }
 };
 
 const onInputKeydown = (evt) => {
@@ -114,4 +129,4 @@ closeButton.addEventListener('click', onCancelButtonClick);
 
 initEffect();
 
-export {initializeFormSubmission , hideModal};
+export {initializeFormSubmission , hideModal, blockSubmitButton, unblockSubmitButton};
