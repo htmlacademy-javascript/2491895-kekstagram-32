@@ -23,5 +23,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-
 export {isEscapeKey, showAlert, debounce};
