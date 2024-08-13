@@ -5,7 +5,7 @@ import {hideMessage} from './message-form.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const body = document.querySelector('body');
-const form = document.querySelector('.img-upload__form');
+const form = body.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
 const closeButton = form.querySelector('.img-upload__cancel');
 const fileField = form.querySelector('.img-upload__input');
@@ -13,7 +13,7 @@ const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
 const submitButton = form.querySelector('.img-upload__submit');
 const photoPreview = form.querySelector('.img-upload__preview img');
-const effectsPreviews = document.querySelectorAll('.effects__preview');
+const effectsPreviews = overlay.querySelectorAll('.effects__preview');
 
 const NUMBER_OF_HASHTAG = 5;
 const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
